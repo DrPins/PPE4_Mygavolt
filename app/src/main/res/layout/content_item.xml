@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="android.sio2.efficom.fr.applitoto.ItemActivity"
+    tools:showIn="@layout/activity_item">
+
+    <TextView
+        android:id="@+id/itemDetailDateTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        />
+
+    <TextView
+        android:id="@+id/itemDetailFirstNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/itemDetailDateTextView"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/itemDetailLastNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/itemDetailFirstNameTextView"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/itemDetailCompanyTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/itemDetailLastNameTextView"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/itemDetailAddress1TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/itemDetailCompanyTextView"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/itemDetailAddress2TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/itemDetailAddress1TextView"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/itemDetailCityTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/itemDetailAddress2TextView"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/itemDetailZipTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/itemDetailCityTextView"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/itemDetailPhoneTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/itemDetailZipTextView"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/itemDetailReportTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/itemDetailPhoneTextView"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/itemDetailMotiveTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/itemDetailReportTextView"
+        android:text="TextView" />
+
+
+</RelativeLayout>

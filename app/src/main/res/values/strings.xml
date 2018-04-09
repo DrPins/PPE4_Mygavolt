@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Mygavolt</string>
+    <string name="title_activity_item">Détails Interventions</string>
+    <string name="title_activity_report">ReportActivity</string>
+    <string name="report">Rapport</string>
+    <string name="send">Envoyer</string>
+</resources>
