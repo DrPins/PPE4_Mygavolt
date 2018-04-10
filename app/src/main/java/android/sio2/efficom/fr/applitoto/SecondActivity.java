@@ -1,6 +1,8 @@
 package android.sio2.efficom.fr.applitoto;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.sio2.efficom.fr.applitoto.adapters.InterventionAdapter;
@@ -17,8 +19,10 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -28,16 +32,23 @@ import okhttp3.Response;
 public class SecondActivity extends AppCompatActivity {
 
     OkHttpClient client = new OkHttpClient();
-    String apiURL = "https://pins.area42.fr/api.php";
+    String apiURL = "https://pins.area42.fr/interventions.php";
+
 
     TextView textView;
     RecyclerView recyclerView;
     private View.OnClickListener adapterClicListener;
+    private String lastname;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.second_layout);
+
+        SharedPreferences mSharedPreferences = getSharedPreferences("Pref", Context.MODE_PRIVATE);
+
+
+        lastname = mSharedPreferences.getString("lastname", null);
 
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -51,7 +62,7 @@ public class SecondActivity extends AppCompatActivity {
         adapterClicListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intervention.idInterventionTotal.Liste_int item = (Intervention.idInterventionTotal.Liste_int) view.getTag();
+                Intervention.Liste_int item = (Intervention.Liste_int) view.getTag();
                 Intent intent = new Intent(view.getContext(), ItemActivity.class);
                 intent.putExtra("IDINTER", item.id_inter);
                 intent.putExtra("LASTNAME", item.lastname);
@@ -77,10 +88,10 @@ public class SecondActivity extends AppCompatActivity {
         //création de l'async Task
         MonAsyncTask monAsyncTask = new MonAsyncTask();
         //exécution de l'async task sans bloquer le main thread
-        monAsyncTask.execute(apiURL);
+        monAsyncTask.execute(apiURL, lastname);
     }
 
-    String run(String url) throws IOException {
+   /* String run(String url) throws IOException {
         //pour lancer l'async task
         Request request = new Request.Builder().url(url).build();
 
@@ -88,23 +99,57 @@ public class SecondActivity extends AppCompatActivity {
         return response.body().string();
     }
 
-
+*/
     class MonAsyncTask extends AsyncTask<String, Void, Intervention> {
 
         @Override
         protected Intervention doInBackground(String... strings) {
             //on n'est pas dans le main thread ici
+            //le traitement qui va se faire en async
+
+            String apiURL = strings[0];
+            String lastname = strings[1];
+
+
+            //methode post
+            //on consitute le contenu du post (un endroit où on pourra mettre les elements du post)
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("lastname", lastname)
+                    .build();
+
+            // on envoye la requete au serveur et va construire la nouvelle url
+            Request request = new Request.Builder()
+                    .url(apiURL) // url de base
+                    .post(requestBody) //la partie post
+                    .build();
+
             try {
-                String jsonBody = run(strings[0]);
+                Response response = client.newCall(request).execute();
 
                 Gson gson = new Gson();
-                Intervention intervention = gson.fromJson(jsonBody, Intervention.class);
+                return gson.fromJson(response.body().string(), Intervention.class);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            /*
+            try {
+                String apiURL = strings[0];
+                String lastname = strings[1];
+
+                Gson gson = new Gson();
+                Intervention intervention = gson.fromJson(apiURL, Intervention.class);
 
                 return intervention;
             } catch (IOException e) {
                 Log.e("SIO2", e.getStackTrace().toString());
                 return null;
-            }
+            }*/
+
+            return null;
         }
 
         @Override
@@ -115,7 +160,7 @@ public class SecondActivity extends AppCompatActivity {
             }
 
             //création de l'adapter avec la list d'items dont il va gérer l'affichage
-            InterventionAdapter adapter = new InterventionAdapter(intervention.id_intervention_total.liste_int, adapterClicListener);
+            InterventionAdapter adapter = new InterventionAdapter(intervention.liste_int, adapterClicListener);
 
             //fait le lien entre le recycleview et l'adapter
             recyclerView.setAdapter(adapter);

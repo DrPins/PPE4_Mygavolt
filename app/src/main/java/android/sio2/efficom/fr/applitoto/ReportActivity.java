@@ -63,8 +63,8 @@ public class ReportActivity extends AppCompatActivity {
 
                 Toast.makeText(view.getContext(), "Rapport envoyé", Toast.LENGTH_LONG).show();
 
-               // Intent intent = new Intent(view.getContext(), SecondActivity.class);
-               // startActivity(intent);
+                Intent intent = new Intent(view.getContext(), SecondActivity.class);
+                startActivity(intent);
 
 
             }
@@ -74,7 +74,7 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     OkHttpClient client = new OkHttpClient(); // classe qui permet d'envoyer et récupérer des données
-    String apiURL = "https://pins.area42.fr/api.php";
+    String apiURL = "https://pins.area42.fr/update.php";
 
 
 
@@ -93,7 +93,6 @@ public class ReportActivity extends AppCompatActivity {
                     .addFormDataPart("report", strings[1])
                     .addFormDataPart("duration", "00:00:00.0000000")
                     .addFormDataPart("id_intervention", "1004")
-                    .addFormDataPart("action", "fin")
                     .build();
 
             // on envoye la requete au serveur et va construire la nouvelle url

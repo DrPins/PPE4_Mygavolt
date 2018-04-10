@@ -1,6 +1,8 @@
 package android.sio2.efficom.fr.applitoto;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.sio2.efficom.fr.applitoto.model.Intervention;
 import android.support.v7.app.AppCompatActivity;
@@ -37,24 +39,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
-
-
         Button monBouton = findViewById(R.id.button);
         monBouton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Hello", Toast.LENGTH_LONG).show();
-
-                Intent intent = new Intent(view.getContext(), SecondActivity.class);
-                startActivity(intent);
+               // Toast.makeText(view.getContext(), "Hello", Toast.LENGTH_LONG).show();
 
 
 
                 EditText editLogin = findViewById(R.id.editLogin);
-
+                EditText editPassword = findViewById(R.id.editPassword);
 
                 String login = editLogin.getText().toString();
+                String pwd = editPassword.getText().toString();
 
 
                 //création de l'async Task
@@ -63,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                monAsyncTask.execute(apiURL,login);
+                monAsyncTask.execute(apiURL,login, pwd);
 
 
             }
@@ -71,24 +68,51 @@ public class MainActivity extends AppCompatActivity {
     }
 
     OkHttpClient client = new OkHttpClient(); // classe qui permet d'envoyer et récupérer des données
-    String apiURL = "https://pins.area42.fr/api.php";
+    String apiURL = "https://pins.area42.fr/login.php";
 
 
 
-    class RequeteAsyncTask extends AsyncTask<String, Void, String>{
+    class RequeteAsyncTask extends AsyncTask<String, Void, Boolean>{
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected void onPostExecute(Boolean b) {
+
+           if(b) {
+
+               SharedPreferences mSharedPreferences = getSharedPreferences("Pref", Context.MODE_PRIVATE);
+               SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+
+               Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+
+               EditText editLogin = findViewById(R.id.editLogin);
+               String login = editLogin.getText().toString();
+
+
+               mEditor.putString("lastname", login).apply();
+
+
+               startActivity(intent);
+           }
+
+           else{
+               Toast.makeText(MainActivity.this.getApplicationContext(), "Login ou mot de passe invalide", Toast.LENGTH_LONG).show();
+           }
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
             //le traitement qui va se faire en async
 
             String url = strings[0];
             String login = strings[1];
+            String pwd = strings[2];
 
             //methode post
             //on consitute le contenu du post (un endroit où on pourra mettre les elements du post)
             RequestBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("lastname", login)
+                    .addFormDataPart("pwd", pwd)
                     .build();
 
             // on envoye la requete au serveur et va construire la nouvelle url
@@ -100,17 +124,31 @@ public class MainActivity extends AppCompatActivity {
             Response response;
             try {
                 response = client.newCall(request).execute();
+                //on utilise 2 façons différents pour vérifier si le login + mdp est correct
+                //mais on ne peut en utiliser d'une des 2
 
-                // Do something with the response.
-            } catch (IOException e) {
+                String s = response.body().string();
+                //récupère le code retour
+                if(response.code() == 200 || "ok".equals(s)){
+                    Log.d("SIO2", "code retour " + response.isSuccessful());
+                    Log.d("API1", "body " + response.isSuccessful());
+                    return true;
+                }
+                else{
+                    Log.d("API1", "error login "+ s + " code " + response.code());
+                    return false;
+                }
+
+            } catch (Exception e) {
+
                 e.printStackTrace();
                 return null;
             }
 
-            Log.d("SIO2", "" + response.isSuccessful());
 
 
-            return null;
+
+
         }
     }
 

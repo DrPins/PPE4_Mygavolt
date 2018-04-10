@@ -16,10 +16,10 @@ import java.util.List;
 
 public class InterventionAdapter extends RecyclerView.Adapter<InterventionAdapter.ViewHolder> {
 
-    List<Intervention.idInterventionTotal.Liste_int> items;
+    List<Intervention.Liste_int> items;
     View.OnClickListener adapterClicListener;
 
-    public InterventionAdapter(List<Intervention.idInterventionTotal.Liste_int> items, View.OnClickListener adapterClicListener) {
+    public InterventionAdapter(List<Intervention.Liste_int> items, View.OnClickListener adapterClicListener) {
         this.items = items;
         this.adapterClicListener = adapterClicListener;
     }
@@ -36,7 +36,7 @@ public class InterventionAdapter extends RecyclerView.Adapter<InterventionAdapte
     @Override
     public void onBindViewHolder(InterventionAdapter.ViewHolder holder, final int position) {
         //récupère l'item qui correspond à la position demandée
-        final Intervention.idInterventionTotal.Liste_int item = items.get(position);
+        final Intervention.Liste_int item = items.get(position);
         //met le contenu de l'item courant
         holder.itemMotiveTextView.setText("Motive: " + item.motive); 
         holder.itemDateTextView.setText("Date: " + item.date_inter);
