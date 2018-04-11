@@ -36,11 +36,11 @@ public class ItemActivity extends AppCompatActivity {
         String lastname = getIntent().getStringExtra("LASTNAME");
         String firstname = getIntent().getStringExtra("FIRSTNAME");
         String company = getIntent().getStringExtra("COMPANY");
-        String date = getIntent().getStringExtra("DATE");
-        String address1 = getIntent().getStringExtra("ADDRESS1");
-        String address2 = getIntent().getStringExtra("ADDRESS2");
-        String city = getIntent().getStringExtra("CITY");
-        String zipcode = getIntent().getStringExtra("ZIPCODE");
+        final String date = getIntent().getStringExtra("DATE");
+        final String address1 = getIntent().getStringExtra("ADDRESS1");
+        final String address2 = getIntent().getStringExtra("ADDRESS2");
+        final String city = getIntent().getStringExtra("CITY");
+        final String zipcode = getIntent().getStringExtra("ZIPCODE");
         String phone = getIntent().getStringExtra("PHONE");
         String motive = getIntent().getStringExtra("MOTIVE");
         String pending = getIntent().getStringExtra("PENDING");
@@ -66,6 +66,22 @@ public class ItemActivity extends AppCompatActivity {
 
                 intent.putExtra("IDINTER", idInter);
                 intent.putExtra("REPORT", report);
+                startActivity(intent);
+            }
+        });
+
+        FloatingActionButton fabMap = findViewById(R.id.fabGoToMap);
+        fabMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), MapsActivity.class);
+
+                intent.putExtra("IDINTER", idInter);
+                intent.putExtra("DATE", date);
+                intent.putExtra("ADDRESS1", address1);
+                intent.putExtra("ADDRESS2",address2);
+                intent.putExtra("CITY", city);
+                intent.putExtra("ZIPCODE", zipcode);
                 startActivity(intent);
             }
         });

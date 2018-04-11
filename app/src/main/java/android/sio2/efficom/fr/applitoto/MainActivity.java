@@ -1,5 +1,6 @@
 package android.sio2.efficom.fr.applitoto;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,36 +15,48 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.Date;
 
+import okhttp3.Connection;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-
+// AIzaSyA3YmPp32lRhvrqyq5g9KejH0U0_tlHdZk
 // A faire:
-// - envoyer le rapport à l'api
-// - envoyer un id à l'api
+// géolocalisation
 // - ajouter une couleur/bouton pour dire si une intervention a été terminée
 
 public class MainActivity extends AppCompatActivity {
+
+    //vérification de l'accès aux maps
+    private static final String TAG = "MainActivity";
+    private static final int ERROR_DIALOG_REQUEST = 9001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (isServicesOk()){
+            init();
+        }
 
+    }
+
+    private void init(){
         Button monBouton = findViewById(R.id.button);
         monBouton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // Toast.makeText(view.getContext(), "Hello", Toast.LENGTH_LONG).show();
+                // Toast.makeText(view.getContext(), "Hello", Toast.LENGTH_LONG).show();
 
 
 
@@ -78,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean b) {
 
            if(b) {
-
+                //crée une variable de "session"
                SharedPreferences mSharedPreferences = getSharedPreferences("Pref", Context.MODE_PRIVATE);
                SharedPreferences.Editor mEditor = mSharedPreferences.edit();
 
@@ -167,5 +180,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+
+    public boolean isServicesOk (){
+        Log.d(TAG, "isServicesOk : checking Google services version" );
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MainActivity.this);
+
+        if(available == ConnectionResult.SUCCESS){
+            //everything is ok
+            Log.d(TAG, "Google Play Services is working" );
+            return true;
+        }
+        else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
+            // si on peut résoudre l'erreur
+            Log.d(TAG, "An error occured but we can fix it" );
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MainActivity.this,  available, ERROR_DIALOG_REQUEST);
+            dialog.show();
+        }
+        else {
+            // si on ne peut pas résoudre l'erreur
+            Toast.makeText(this, "You  can't make map requests",Toast.LENGTH_LONG ).show();
+        }
+        return false;
     }
 }
