@@ -47,6 +47,13 @@ public class MapsActivity extends FragmentActivity  {
     private static final String COARSE_LOCATION = android.Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 15;
+    private double startLat = 0;
+    private double startLong = 0;
+    private double endLat = 0;
+    private double endLong = 0;
+    private boolean endBool = false;
+    private boolean startBool = false;
+
 
     private Boolean mLocationPermissonGranted = false;
     private GoogleMap mMap;
@@ -98,8 +105,31 @@ public class MapsActivity extends FragmentActivity  {
                             Log.d(TAG, "getDeviceLocation : location found");
                             Location currentLocation = task.getResult();
 
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
-                                    DEFAULT_ZOOM);
+                            startLat = currentLocation.getLatitude();
+                            startLong = currentLocation.getLongitude();
+
+                            Log.d(TAG, "getDeviceLocation : location found");
+
+                            if(endLat != 0 && endLong != 0){
+                                // dans ce cas, on affiche le bouton et on lance le onclick
+                                FloatingActionButton fabMap = findViewById(R.id.fabGetItinerary);
+                                fabMap.setVisibility(View.VISIBLE);
+                                fabMap.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                        String format = "http://maps.google.com/maps?saddr=" + startLat + ","
+                                                + startLong + "&daddr=" + endLat + "," + endLong + "(Ma destination)";
+                                        Uri uri = Uri.parse(format);
+                                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                            }
+
+                           // moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
 
                         } else {
                             Log.d(TAG, "getDeviceLocation : current location is null");
@@ -148,27 +178,7 @@ public class MapsActivity extends FragmentActivity  {
                 new DataLongOperationAsynchTask().execute();
                 //
 
-                FloatingActionButton fabMap = findViewById(R.id.fabGetItinerary);
-                fabMap.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
 
-                        //Ancienne adresse d'efficom
-                        double startLat = 50.6350927;
-                        double startLong = 3.057279;
-
-                        //efficom
-                        double lat = 50.6306239;
-                        double lng = 3.0582609;
-
-                        String format = "http://maps.google.com/maps?saddr=" + startLat + ","
-                                + startLong + "&daddr=" + lat + "," + lng + "(Ma destination)";
-                        Uri uri = Uri.parse(format);
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                    }
-                });
 
 
 
@@ -227,6 +237,31 @@ public class MapsActivity extends FragmentActivity  {
                 mMap.addMarker(new MarkerOptions().position(coordinate).title("Efficom !!!"));
                 CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 18);
                 mMap.animateCamera(yourLocation);
+
+                endLat = lat;
+                endLong = lng;
+
+
+                // on vérifie si la tache asynchrone permettant de récupérer les coordonnées de départ
+                // a bien fini
+                if(startLat != 0 && startLong != 0){
+                    // dans ce cas, on affiche le bouton et on lance le onclick
+                    FloatingActionButton fabMap = findViewById(R.id.fabGetItinerary);
+                    fabMap.setVisibility(View.VISIBLE);
+                    fabMap.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            String format = "http://maps.google.com/maps?saddr=" + startLat + ","
+                                    + startLong + "&daddr=" + endLat + "," + endLong + "(Ma destination)";
+                            Uri uri = Uri.parse(format);
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+                    });
+
+                }
 
             } catch (JSONException e) {
                 e.printStackTrace();

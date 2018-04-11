@@ -31,7 +31,7 @@ import okhttp3.Response;
 
 // AIzaSyA3YmPp32lRhvrqyq5g9KejH0U0_tlHdZk
 // A faire:
-// géolocalisation
+
 // - ajouter une couleur/bouton pour dire si une intervention a été terminée
 
 public class MainActivity extends AppCompatActivity {

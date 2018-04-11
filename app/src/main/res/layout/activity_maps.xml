@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_note_add_black_24dp" />
+        android:visibility="invisible"
+        app:srcCompat="@drawable/ic_navigation_black_24dp" />
 
 </RelativeLayout>
