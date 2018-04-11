@@ -1,16 +1,20 @@
 package android.sio2.efficom.fr.applitoto;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -58,7 +62,6 @@ public class MapsActivity extends FragmentActivity  {
     private static final String BASE_LOCATION_URL = "https://maps.googleapis.com/maps/api/geocode/json?key=" +
             GEOCODE_API_KEY +"&address=";
     private   String locationURL = null;
-
 
 
 
@@ -145,6 +148,28 @@ public class MapsActivity extends FragmentActivity  {
                 new DataLongOperationAsynchTask().execute();
                 //
 
+                FloatingActionButton fabMap = findViewById(R.id.fabGetItinerary);
+                fabMap.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        //Ancienne adresse d'efficom
+                        double startLat = 50.6350927;
+                        double startLong = 3.057279;
+
+                        //efficom
+                        double lat = 50.6306239;
+                        double lng = 3.0582609;
+
+                        String format = "http://maps.google.com/maps?saddr=" + startLat + ","
+                                + startLong + "&daddr=" + lat + "," + lng + "(Ma destination)";
+                        Uri uri = Uri.parse(format);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                });
+
 
 
 
@@ -192,7 +217,7 @@ public class MapsActivity extends FragmentActivity  {
                 double lat = ((JSONArray)jsonObject.get("results")).getJSONObject(0)
                         .getJSONObject("geometry").getJSONObject("location")
                         .getDouble("lat");
-
+                // ici on récupère la lattitude du device
                 Log.d("latitude", "" + lat);
                 Log.d("longitude", "" + lng);
 
