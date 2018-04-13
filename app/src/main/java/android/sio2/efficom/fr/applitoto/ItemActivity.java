@@ -21,12 +21,12 @@ public class ItemActivity extends AppCompatActivity {
 
         TextView itemDate = findViewById(R.id.itemDetailDateTextView);
         TextView itemFirstName = findViewById(R.id.itemDetailFirstNameTextView);
-        TextView itemLastName= findViewById(R.id.itemDetailLastNameTextView);
+        //TextView itemLastName= findViewById(R.id.itemDetailLastNameTextView);
         TextView itemCompany= findViewById(R.id.itemDetailCompanyTextView);
         TextView itemAddress1= findViewById(R.id.itemDetailAddress1TextView);
-        TextView itemAddress2= findViewById(R.id.itemDetailAddress2TextView);
+        //TextView itemAddress2= findViewById(R.id.itemDetailAddress2TextView);
         TextView itemCity= findViewById(R.id.itemDetailCityTextView);
-        TextView itemZip= findViewById(R.id.itemDetailZipTextView);
+        //TextView itemZip= findViewById(R.id.itemDetailZipTextView);
         TextView itemPhone= findViewById(R.id.itemDetailPhoneTextView);
         TextView itemReport= findViewById(R.id.itemDetailReportTextView);
         TextView itemMotive= findViewById(R.id.itemDetailMotiveTextView);
@@ -47,13 +47,13 @@ public class ItemActivity extends AppCompatActivity {
         final String report = getIntent().getStringExtra("REPORT");
 
         itemDate.setText(date);
-        itemFirstName.setText(firstname);
-        itemLastName.setText(lastname);
+        itemFirstName.setText(firstname +' '+ lastname);
+        //itemLastName.setText(lastname);
         itemCompany.setText(company);
-        itemAddress1.setText(address1);
-        itemAddress2.setText(address2);
-        itemCity.setText(city);
-        itemZip.setText(zipcode);
+        itemAddress1.setText(address1 +' '+ address2);
+        //itemAddress2.setText(address2);
+        itemCity.setText(city +' '+ zipcode);
+        //itemZip.setText(zipcode);
         itemPhone.setText(phone);
         itemReport.setText(report);
         itemMotive.setText(motive);

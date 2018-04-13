@@ -1,39 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="android.sio2.efficom.fr.applitoto.ReportActivity"
     tools:showIn="@layout/activity_report">
 
-
-    <EditText
-        android:id="@+id/reportEditText"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="2dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="381dp"
-        android:hint="@string/report"
-        android:padding="3dp"
-        app:layout_constraintBottom_toTopOf="@+id/sendReportBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:gravity="top|left"/>
-
-
-
-
-
     <Button
         android:id="@+id/sendReportBtn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="46dp"
+        android:layout_marginTop="8dp"
         android:text="@string/send"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/reportEditText"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="16dp" />
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/reportEditText"
+        android:layout_width="382dp"
+        android:layout_height="wrap_content"
+
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="78dp"
+        android:hint="@string/report"
+        android:padding="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sendReportBtn"
+        app:layout_constraintVertical_bias="1.0" />
+
+
+
+
+</RelativeLayout>

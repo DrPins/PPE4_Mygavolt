@@ -3,7 +3,7 @@
     <string name="title_activity_item">Détails Interventions</string>
     <string name="title_activity_report">ReportActivity</string>
     <string name="report">Rapport</string>
-    <string name="send">Envoyer</string>
+    <string name="send">Envoyer le rapport</string>
     <string name="google_maps_API_key">AIzaSyA3YmPp32lRhvrqyq5g9KejH0U0_tlHdZk</string>
 
 </resources>

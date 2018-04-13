@@ -35,7 +35,7 @@ public class ReportActivity extends AppCompatActivity {
         Toolbar idToolbar = findViewById(R.id.toolbar);
         final EditText reportEditText  = findViewById(R.id.reportEditText);
 
-        String id = getIntent().getStringExtra("IDINTER");
+        final String id = getIntent().getStringExtra("IDINTER");
         String report = getIntent().getStringExtra("REPORT");
 
         setSupportActionBar(idToolbar);
@@ -59,7 +59,7 @@ public class ReportActivity extends AppCompatActivity {
 
 
 
-                monAsyncTask.execute(apiURL,reportEdit);
+                monAsyncTask.execute(apiURL,reportEdit,id);
 
                 Toast.makeText(view.getContext(), "Rapport envoyé", Toast.LENGTH_LONG).show();
 
@@ -92,7 +92,7 @@ public class ReportActivity extends AppCompatActivity {
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("report", strings[1])
                     .addFormDataPart("duration", "00:00:00.0000000")
-                    .addFormDataPart("id_intervention", "1004")
+                    .addFormDataPart("id_intervention", strings[2])
                     .build();
 
             // on envoye la requete au serveur et va construire la nouvelle url

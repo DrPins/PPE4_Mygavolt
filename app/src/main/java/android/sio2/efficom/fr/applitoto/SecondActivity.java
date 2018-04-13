@@ -59,6 +59,8 @@ public class SecondActivity extends AppCompatActivity {
 //        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
 //        recyclerView.setLayoutManager(gridLayoutManager);
 
+
+
         adapterClicListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +82,8 @@ public class SecondActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
+
+
     }
 
     @Override
@@ -89,6 +93,9 @@ public class SecondActivity extends AppCompatActivity {
         MonAsyncTask monAsyncTask = new MonAsyncTask();
         //exécution de l'async task sans bloquer le main thread
         monAsyncTask.execute(apiURL, lastname);
+
+
+
     }
 
    /* String run(String url) throws IOException {
@@ -161,6 +168,7 @@ public class SecondActivity extends AppCompatActivity {
 
             //création de l'adapter avec la list d'items dont il va gérer l'affichage
             InterventionAdapter adapter = new InterventionAdapter(intervention.liste_int, adapterClicListener);
+
 
             //fait le lien entre le recycleview et l'adapter
             recyclerView.setAdapter(adapter);

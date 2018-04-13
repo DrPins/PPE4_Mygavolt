@@ -3,7 +3,7 @@ package android.sio2.efficom.fr.applitoto.model;
 import java.util.List;
 
 /**
- * Created by yassine on 13/02/2018.
+ * Created by phuveteau on 13/02/2018.
  */
 
 
@@ -27,44 +27,10 @@ public class Intervention {
         public String phone;
         public String motive;
         public String report;
-        public String pending;
+        public int pending;
         public String duration;
 
 
     }
 }
 
-
-
-
-
-/*
-public class Forecast2 {
-    public String cod;
-    public float message;
-
-    public List<Item> list;
-
-    public static class Item{
-        public long dt;
-
-        public Wind wind;
-
-        public Main main;
-
-        public static class Wind{
-            public float speed;
-            public float deg;
-        }
-
-        @Override
-        public String toString() {
-            return dt + ", deg: " + wind.deg;
-        }
-
-        public static class Main {
-            public float temp;
-        }
-    }
-}
-*/

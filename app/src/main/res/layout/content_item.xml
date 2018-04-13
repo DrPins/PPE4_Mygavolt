@@ -11,35 +11,72 @@
     tools:showIn="@layout/activity_item">
 
     <TextView
+        android:id="@+id/itemDetailMotiveTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:background="@color/colorAccent"
+        android:text="Motive"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorWhite"/>
+
+    <TextView
         android:id="@+id/itemDetailDateTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="Date"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/itemDetailMotiveTextView"
+
         />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/itemDetailDateTextView"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/itemLabelContactTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/divider2"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        android:textSize="17dp"
+        android:textAlignment="center"
+        android:text="Contact" />
 
     <TextView
         android:id="@+id/itemDetailFirstNameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/itemDetailDateTextView"
-        android:text="TextView" />
+        android:layout_below="@+id/itemLabelContactTextView"
+        android:text="Firstname" />
 
-    <TextView
+   <!-- <TextView
         android:id="@+id/itemDetailLastNameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/itemDetailFirstNameTextView"
-        android:text="TextView" />
+        android:text="Lastname" />-->
 
     <TextView
         android:id="@+id/itemDetailCompanyTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/itemDetailLastNameTextView"
-        android:text="TextView" />
+        android:layout_below="@+id/itemDetailFirstNameTextView"
+        android:text="Company" />
 
     <TextView
         android:id="@+id/itemDetailAddress1TextView"
@@ -47,55 +84,72 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/itemDetailCompanyTextView"
-        android:text="TextView" />
+        android:text="#" />
 
-    <TextView
+    <!--<TextView
         android:id="@+id/itemDetailAddress2TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/itemDetailAddress1TextView"
-        android:text="TextView" />
+        android:text="Address" />-->
 
     <TextView
         android:id="@+id/itemDetailCityTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/itemDetailAddress2TextView"
-        android:text="TextView" />
+        android:layout_below="@+id/itemDetailAddress1TextView"
+        android:text="City" />
 
-    <TextView
+   <!-- <TextView
         android:id="@+id/itemDetailZipTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/itemDetailCityTextView"
-        android:text="TextView" />
+        android:text="Zipcode" />-->
 
     <TextView
         android:id="@+id/itemDetailPhoneTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/itemDetailZipTextView"
-        android:text="TextView" />
+        android:layout_below="@+id/itemDetailCityTextView"
+        android:layout_marginBottom="10dp"
+        android:text="phone"/>
+
+
+    <TextView
+        android:id="@+id/itemLabelReportTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/itemDetailPhoneTextView"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        android:textSize="17dp"
+        android:textAlignment="center"
+        android:text="Rapport" />
 
     <TextView
         android:id="@+id/itemDetailReportTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/itemDetailPhoneTextView"
-        android:text="TextView" />
+        android:layout_below="@+id/itemLabelReportTextView"
+        android:text="Report" />
 
-    <TextView
-        android:id="@+id/itemDetailMotiveTextView"
+
+
+    <View
+        android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="2dp"
+
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/itemDetailReportTextView"
-        android:text="TextView" />
+        android:layout_below="@+id/itemDetailPhoneTextView"
+        android:background="?android:attr/listDivider" />
 
 
 </RelativeLayout>

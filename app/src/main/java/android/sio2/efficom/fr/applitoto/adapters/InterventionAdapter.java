@@ -3,6 +3,7 @@ package android.sio2.efficom.fr.applitoto.adapters;
 import android.sio2.efficom.fr.applitoto.R;
 import android.sio2.efficom.fr.applitoto.model.Intervention;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +39,15 @@ public class InterventionAdapter extends RecyclerView.Adapter<InterventionAdapte
         //récupère l'item qui correspond à la position demandée
         final Intervention.Liste_int item = items.get(position);
         //met le contenu de l'item courant
-        holder.itemMotiveTextView.setText("Motive: " + item.motive); 
-        holder.itemDateTextView.setText("Date: " + item.date_inter);
-        holder.itemTempTextView.setText("Ville: " + item.city );
+
+        if(item.pending == 1){
+            holder.itemDateTextView.setBackgroundResource(R.color.colorGrey);
+            Log.d("prout", " chui passée : " + item.pending);
+        }
+        Log.d("prout", " item pending : " + item.pending);
+        holder.itemMotiveTextView.setText(item.motive);
+        holder.itemDateTextView.setText(item.date_inter);
+        holder.itemTempTextView.setText(item.city );
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +73,7 @@ public class InterventionAdapter extends RecyclerView.Adapter<InterventionAdapte
             itemDateTextView = itemView.findViewById(R.id.itemMotiveTextView);
             itemMotiveTextView = itemView.findViewById(R.id.itemDateTextView);
             itemTempTextView = itemView.findViewById(R.id.itemCityTextView);
+
         }
     }
 }
