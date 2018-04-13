@@ -29,6 +29,7 @@
         android:text="Date"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:inputType="date"
         android:layout_below="@+id/itemDetailMotiveTextView"
 
         />
@@ -117,6 +118,8 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/itemDetailCityTextView"
         android:layout_marginBottom="10dp"
+        android:autoLink="phone"
+        android:linksClickable="true"
         android:text="phone"/>
 
 

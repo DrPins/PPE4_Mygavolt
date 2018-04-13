@@ -234,8 +234,8 @@ public class MapsActivity extends FragmentActivity  {
                 // Object qui représente les coordonnées
                 LatLng coordinate = new LatLng(lat, lng);
                 //Ajout d'un marqueur
-                mMap.addMarker(new MarkerOptions().position(coordinate).title("Efficom !!!"));
-                CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 18);
+                mMap.addMarker(new MarkerOptions().position(coordinate).title(""));
+                CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 12);
                 mMap.animateCamera(yourLocation);
 
                 endLat = lat;

@@ -26,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
+        android:inputType="date"
         android:text="TextView"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"

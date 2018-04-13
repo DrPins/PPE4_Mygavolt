@@ -1,5 +1,6 @@
 package android.sio2.efficom.fr.applitoto.model;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public class Intervention {
     public static class Liste_int {
 
         public String id_inter;
-        public String date_inter;
+        public Date date_inter;
         public String firstname;
         public String lastname;
         public String company;

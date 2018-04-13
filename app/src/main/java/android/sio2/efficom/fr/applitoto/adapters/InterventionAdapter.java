@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.util.List;
 
 /**
@@ -42,11 +43,12 @@ public class InterventionAdapter extends RecyclerView.Adapter<InterventionAdapte
 
         if(item.pending == 1){
             holder.itemDateTextView.setBackgroundResource(R.color.colorGrey);
-            Log.d("prout", " chui passée : " + item.pending);
+
         }
-        Log.d("prout", " item pending : " + item.pending);
+
+
         holder.itemMotiveTextView.setText(item.motive);
-        holder.itemDateTextView.setText(item.date_inter);
+        holder.itemDateTextView.setText(DateFormat.getDateInstance(DateFormat.FULL).format(item.date_inter));
         holder.itemTempTextView.setText(item.city );
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
