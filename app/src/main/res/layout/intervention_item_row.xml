@@ -12,11 +12,13 @@
         android:id="@+id/itemMotiveTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textColor="#fff"
-        android:background="#11838e"
-        android:textSize="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorAccent"
+        android:textStyle="bold"
         android:padding="5dp"
+        android:text="Date"
+        android:textColor="#fff"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,25 +27,42 @@
         android:id="@+id/itemDateTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="7dp"
         android:inputType="date"
-        android:text="TextView"
+        android:padding="5dp"
+
+        android:text="Motif"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemCityTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/itemCityTextView"
+        tools:layout_editor_absoluteX="5dp" />
+
+    <TextView
+        android:id="@+id/itemTimeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="time"
+        android:padding="5dp"
+        android:text="Time"
+        android:textSize="17dp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/itemCityTextView"
+        app:layout_constraintTop_toBottomOf="@+id/itemMotiveTextView"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="16dp" />
 
     <TextView
         android:id="@+id/itemCityTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:padding="5dp"
-        android:text="TextView"
-
+        android:text="City"
         android:textSize="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemMotiveTextView" />
+        app:layout_constraintBottom_toTopOf="@+id/itemDateTextView"
+        app:layout_constraintTop_toBottomOf="@+id/itemTimeTextView"
+        tools:layout_editor_absoluteX="5dp" />
 
 </android.support.constraint.ConstraintLayout>

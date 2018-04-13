@@ -71,6 +71,7 @@ public class SecondActivity extends AppCompatActivity {
                 intent.putExtra("FIRSTNAME", item.firstname);
                 intent.putExtra("COMPANY", item.company);
                 intent.putExtra("DATE", item.date_inter);
+                intent.putExtra("HOUR", item.time_inter);
                 intent.putExtra("ADDRESS1", item.address1);
                 intent.putExtra("ADDRESS2", item.address2);
                 intent.putExtra("CITY", item.city);

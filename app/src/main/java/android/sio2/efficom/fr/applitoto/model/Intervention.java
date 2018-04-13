@@ -1,5 +1,6 @@
 package android.sio2.efficom.fr.applitoto.model;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class Intervention {
 
         public String id_inter;
         public Date date_inter;
+        public String time_inter;
         public String firstname;
         public String lastname;
         public String company;
