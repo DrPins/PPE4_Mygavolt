@@ -30,6 +30,8 @@ public class InterventionAdapter extends RecyclerView.Adapter<InterventionAdapte
     @Override
     public InterventionAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+
+        //intervention_item_row c'est la vue que l'on va inflater
         View v = inflater.inflate(R.layout.intervention_item_row, parent, false);
         InterventionAdapter.ViewHolder viewHolder = new InterventionAdapter.ViewHolder(v);
         return viewHolder;
@@ -43,15 +45,18 @@ public class InterventionAdapter extends RecyclerView.Adapter<InterventionAdapte
         final Intervention.Liste_int item = items.get(position);
         //met le contenu de l'item courant
 
-
+        // on va remplir les champs
 
         String heure;
+        // si l'heure a été définie, on va faire un substring pour n'afficher que les heures et les minutes
         if(item.time_inter != null) {
             heure = item.time_inter.substring(0, 5);
         }
         else {
+            //dans le cas contraire
            heure = "Pas d'horaire défini";
         }
+
 
         holder.itemMotiveTextView.setText(item.motive);
         holder.itemTimeTextView.setText(heure);
@@ -65,6 +70,7 @@ public class InterventionAdapter extends RecyclerView.Adapter<InterventionAdapte
             }
         });
 
+        //das le cas où l'intervention a déjà été réalisée, on change le visuel
         if(item.pending == 1){
             holder.itemDateTextView.setBackgroundResource(R.color.colorGrey);
             holder.itemTimeTextView.setTextColor(R.color.colorGrey);
@@ -83,6 +89,7 @@ public class InterventionAdapter extends RecyclerView.Adapter<InterventionAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        // si on veut rajouter un champ, il faut le déclarer ici
         public TextView itemDateTextView, itemMotiveTextView, itemTempTextView, itemTimeTextView;
 
 

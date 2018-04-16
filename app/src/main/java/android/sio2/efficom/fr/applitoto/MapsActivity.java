@@ -61,7 +61,7 @@ public class MapsActivity extends FragmentActivity  {
 
 
 
-
+    //URL qui permettra d'avoir l'itineraire, elle sera envoyée à googleMaps
     //Utilisez la bonne clé d'API geocode
     //https://developers.google.com/maps/documentation/geocoding/get-api-key
     private static final String GEOCODE_API_KEY = "AIzaSyBwfwvFSBptmIlrf8fL0GsJgieqAG-znTo";
@@ -77,6 +77,7 @@ public class MapsActivity extends FragmentActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        // on récupère les données passées en paramètre
         String date = getIntent().getStringExtra("DATE");
         String address1 = getIntent().getStringExtra("ADDRESS1");
         String address2 = getIntent().getStringExtra("ADDRESS2");
@@ -84,71 +85,34 @@ public class MapsActivity extends FragmentActivity  {
         String zipcode = getIntent().getStringExtra("ZIPCODE");
         String idInter = getIntent().getStringExtra("IDINTER");
 
+        //concatenation des éléments d'adresse
         String fullAddress = address1 +" " + address2 + " "+ city + " "+zipcode;
 
+        //concaténation de la base de l'url (pour l'itineraire) et de l'adresse
         locationURL = BASE_LOCATION_URL + fullAddress;
 
+        //avant de pouvoir continuer, il va falloir vérifier les permissions
         getLocationPermission();
     }
 
-    private void getDeviceLocation() {
-        Log.d(TAG, "getDeviceLocation : getting the device current location");
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+    private void getLocationPermission(){
+        String[] permissions ={FINE_LOCATION, COARSE_LOCATION};
+        Log.d(TAG, "Getting location permission");
+        if(ContextCompat.checkSelfPermission(this.getApplicationContext(), FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
+            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), COARSE_LOCATION)== PackageManager.PERMISSION_GRANTED){
 
-        try {
-            if (mLocationPermissonGranted) {
-                final Task<Location> location = mFusedLocationProviderClient.getLastLocation();
-                location.addOnCompleteListener(new OnCompleteListener<Location>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "getDeviceLocation : location found");
-                            Location currentLocation = task.getResult();
-
-                            startLat = currentLocation.getLatitude();
-                            startLong = currentLocation.getLongitude();
-
-                            Log.d(TAG, "getDeviceLocation : location found");
-
-                            if(endLat != 0 && endLong != 0){
-                                // dans ce cas, on affiche le bouton et on lance le onclick
-                                FloatingActionButton fabMap = findViewById(R.id.fabGetItinerary);
-                                fabMap.setVisibility(View.VISIBLE);
-                                fabMap.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-
-                                        String format = "http://maps.google.com/maps?saddr=" + startLat + ","
-                                                + startLong + "&daddr=" + endLat + "," + endLong + "(Ma destination)";
-                                        Uri uri = Uri.parse(format);
-                                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
-                                    }
-                                });
-
-                            }
-
-                           // moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
-
-                        } else {
-                            Log.d(TAG, "getDeviceLocation : current location is null");
-                            Toast.makeText(MapsActivity.this, "unable to get current location",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                //si on a les permissions de géolocalisation
+                //on passe la variable à true
+                mLocationPermissonGranted = true;
+                //on lance l'initialisation de la carte
+                initMap();
+            }else {
+                ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
             }
-
-        } catch (SecurityException e) {
-            Log.e(TAG, "getDeviceLocation : SecurityException" + e.getMessage());
         }
-    }
-
-    private void moveCamera(LatLng latLng, float zoom) {
-        Log.d(TAG, "moveCamera : moving the camera to lat : " + latLng.latitude + " lng : " + latLng.longitude);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
-
+        else {
+            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+        }
     }
 
     private void initMap() {
@@ -164,35 +128,22 @@ public class MapsActivity extends FragmentActivity  {
 
                 if (mLocationPermissonGranted) {
                     getDeviceLocation();
+                    //Dans le cas où on a un pb de permission
                     if (ActivityCompat.checkSelfPermission(MapsActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
                         return;
                     }
                     mMap.setMyLocationEnabled(true);
                 }
 
 
-                //
-                //
                 //ASYNC TASK
                 new DataLongOperationAsynchTask().execute();
-                //
-
-
-
-
-
-
-
             }
         });
     }
 
 
-    //
-    //
     //ASYNC TASK
-
     private class DataLongOperationAsynchTask extends AsyncTask<String, Void, String[]> {
         ProgressDialog dialog = new ProgressDialog(MapsActivity.this);
         @Override
@@ -272,6 +223,71 @@ public class MapsActivity extends FragmentActivity  {
         }
     }
 
+    private void getDeviceLocation() {
+        Log.d(TAG, "getDeviceLocation : getting the device current location");
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        try {
+            if (mLocationPermissonGranted) {
+                final Task<Location> location = mFusedLocationProviderClient.getLastLocation();
+                location.addOnCompleteListener(new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "getDeviceLocation : location found");
+                            Location currentLocation = task.getResult();
+
+                            startLat = currentLocation.getLatitude();
+                            startLong = currentLocation.getLongitude();
+
+                            Log.d(TAG, "getDeviceLocation : location found");
+
+                            if(endLat != 0 && endLong != 0){
+                                // dans ce cas, on affiche le bouton et on lance le onclick
+                                FloatingActionButton fabMap = findViewById(R.id.fabGetItinerary);
+                                fabMap.setVisibility(View.VISIBLE);
+                                fabMap.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                        String format = "http://maps.google.com/maps?saddr=" + startLat + ","
+                                                + startLong + "&daddr=" + endLat + "," + endLong + "(Ma destination)";
+                                        Uri uri = Uri.parse(format);
+                                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                            }
+
+                           // moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
+
+                        } else {
+                            Log.d(TAG, "getDeviceLocation : current location is null");
+                            Toast.makeText(MapsActivity.this, "unable to get current location",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+
+        } catch (SecurityException e) {
+            Log.e(TAG, "getDeviceLocation : SecurityException" + e.getMessage());
+        }
+    }
+
+    private void moveCamera(LatLng latLng, float zoom) {
+        Log.d(TAG, "moveCamera : moving the camera to lat : " + latLng.latitude + " lng : " + latLng.longitude);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+
+    }
+
+
+
+
+
+
 
     public String getLatLongByURL(String requestURL) {
         URL url;
@@ -307,21 +323,7 @@ public class MapsActivity extends FragmentActivity  {
     //
 
 
-    private void getLocationPermission(){
-        String[] permissions ={FINE_LOCATION, COARSE_LOCATION};
-        Log.d(TAG, "Getting location permission");
-        if(ContextCompat.checkSelfPermission(this.getApplicationContext(), FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
-            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), COARSE_LOCATION)== PackageManager.PERMISSION_GRANTED){
-                mLocationPermissonGranted = true;
-                initMap();
-            }else {
-                ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
-            }
-        }
-        else {
-            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
-        }
-    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

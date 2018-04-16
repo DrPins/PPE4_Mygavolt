@@ -43,11 +43,14 @@ public class SecondActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // on lie avec la vue
         setContentView(R.layout.second_layout);
 
+        //création des shared préférences (semblabe aux variables de sessions
+        // permet de faire passer des données d'un script à un autre sans passer
+        //par les extras.
         SharedPreferences mSharedPreferences = getSharedPreferences("Pref", Context.MODE_PRIVATE);
-
-
+        // initialisation de lastname en shared preferences
         lastname = mSharedPreferences.getString("lastname", null);
 
 
@@ -56,11 +59,8 @@ public class SecondActivity extends AppCompatActivity {
         //affichage des données sous forme d'une liste
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-//        recyclerView.setLayoutManager(gridLayoutManager);
 
-
-
+        //on fait passer à l'adapteur les données récupérée par l'api
         adapterClicListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,22 +92,17 @@ public class SecondActivity extends AppCompatActivity {
         super.onResume();
         //création de l'async Task
         MonAsyncTask monAsyncTask = new MonAsyncTask();
-        //exécution de l'async task sans bloquer le main thread
+        //exécution de l'async task sans bloquer le main thread (api et lastname sont les
+        //paramètres passés à l'asynctask (on peut faire passer autant de paramètres
+        //que l'on veut
+        //NB: ici on fait passer lastname qui servira à la requète de récupération des
+        //interventions (récupération des intervention de lastname
         monAsyncTask.execute(apiURL, lastname);
 
 
 
     }
 
-   /* String run(String url) throws IOException {
-        //pour lancer l'async task
-        Request request = new Request.Builder().url(url).build();
-
-        Response response = client.newCall(request).execute();
-        return response.body().string();
-    }
-
-*/
     class MonAsyncTask extends AsyncTask<String, Void, Intervention> {
 
         @Override
@@ -115,6 +110,8 @@ public class SecondActivity extends AppCompatActivity {
             //on n'est pas dans le main thread ici
             //le traitement qui va se faire en async
 
+            //ici on récupère les données passées en paramètre de l'asyctask
+            //NB: le premier paramètre sera strings[0], le 2ème strings[1], ...
             String apiURL = strings[0];
             String lastname = strings[1];
 
@@ -126,15 +123,16 @@ public class SecondActivity extends AppCompatActivity {
                     .addFormDataPart("lastname", lastname)
                     .build();
 
-            // on envoye la requete au serveur et va construire la nouvelle url
+            // on envoie la requete au serveur et va construire la nouvelle url
             Request request = new Request.Builder()
                     .url(apiURL) // url de base
                     .post(requestBody) //la partie post
                     .build();
 
             try {
+                // exécution de la requete POST et récupération du résultat dans response
                 Response response = client.newCall(request).execute();
-
+                //parse du json
                 Gson gson = new Gson();
                 return gson.fromJson(response.body().string(), Intervention.class);
 
@@ -143,30 +141,18 @@ public class SecondActivity extends AppCompatActivity {
             }
 
 
-            /*
-            try {
-                String apiURL = strings[0];
-                String lastname = strings[1];
-
-                Gson gson = new Gson();
-                Intervention intervention = gson.fromJson(apiURL, Intervention.class);
-
-                return intervention;
-            } catch (IOException e) {
-                Log.e("SIO2", e.getStackTrace().toString());
-                return null;
-            }*/
 
             return null;
         }
 
         @Override
         protected void onPostExecute(Intervention intervention) {
-            //la variable 's' contient le résultat du doInBackground
+            //on passe l'objet intervention en paramètre
+            //si l'intervention est vide on arrete le traitement
             if (intervention == null) {
                 return;
             }
-
+            //sinon
             //création de l'adapter avec la list d'items dont il va gérer l'affichage
             InterventionAdapter adapter = new InterventionAdapter(intervention.liste_int, adapterClicListener);
 

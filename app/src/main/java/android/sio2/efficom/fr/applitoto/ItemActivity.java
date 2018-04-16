@@ -62,8 +62,9 @@ public class ItemActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // bouton qui permet de passer vers l'édition de rapport
                 Intent intent = new Intent(view.getContext(), ReportActivity.class);
-
+                // on passe en paramètre :
                 intent.putExtra("IDINTER", idInter);
                 intent.putExtra("REPORT", report);
                 startActivity(intent);
@@ -75,7 +76,7 @@ public class ItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), MapsActivity.class);
-
+                // bouton qui permet de passer vers la carte
                 intent.putExtra("IDINTER", idInter);
                 intent.putExtra("DATE", date);
                 intent.putExtra("ADDRESS1", address1);
