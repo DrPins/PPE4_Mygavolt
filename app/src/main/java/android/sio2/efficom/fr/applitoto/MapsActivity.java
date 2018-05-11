@@ -1,9 +1,13 @@
 package android.sio2.efficom.fr.applitoto;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -34,11 +38,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
+
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MapsActivity extends FragmentActivity  {
 
@@ -53,6 +64,9 @@ public class MapsActivity extends FragmentActivity  {
     private double endLong = 0;
     private boolean endBool = false;
     private boolean startBool = false;
+    private String lastname;
+    private String sLatLong;
+    private LatLng latLng;
 
 
     private Boolean mLocationPermissonGranted = false;
@@ -84,6 +98,12 @@ public class MapsActivity extends FragmentActivity  {
         String city = getIntent().getStringExtra("CITY");
         String zipcode = getIntent().getStringExtra("ZIPCODE");
         String idInter = getIntent().getStringExtra("IDINTER");
+
+        // permet de faire passer des données d'un script à un autre sans passer
+        //par les extras.
+        SharedPreferences mSharedPreferences = getSharedPreferences("Pref", Context.MODE_PRIVATE);
+        // initialisation de lastname en shared preferences
+        lastname = mSharedPreferences.getString("lastname", null);
 
         //concatenation des éléments d'adresse
         String fullAddress = address1 +" " + address2 + " "+ city + " "+zipcode;
@@ -140,6 +160,160 @@ public class MapsActivity extends FragmentActivity  {
                 new DataLongOperationAsynchTask().execute();
             }
         });
+
+
+        //test pour récupérer régulièrement les coordonnées
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        // dans le cas où le network provider fonctionne
+
+        //création de l'async Task
+        final RequeteAsync geolocAsyncTask = new RequeteAsync();
+
+        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 150000, 0, new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+                    //récupération de la lattitude
+                    double  latitude = location.getLatitude();
+
+
+                    //récupération de la longitude
+                    double longitude = location.getLongitude();
+
+                    //on converti en String (des fois que..)
+                    String sLng = Double.toString(longitude);
+                    String sLat = Double.toString(latitude);
+
+                    latLng = new LatLng(latitude,longitude);
+                    sLatLong = latLng.toString();
+
+
+                    RequeteAsync geolocAsyncTask = new RequeteAsync();
+                   //exécution de l'async task sans bloquer le main thread
+
+                    geolocAsyncTask.execute(apiURL,lastname, sLatLong);
+                    //new geolocAsyncTask().execute(apiURL,lastname, sLatLong);
+
+                    //Toast.makeText(MapsActivity.this, "maps is ready"+sLat+" "+sLng, Toast.LENGTH_LONG).show();
+                    Log.i("pins", "coordonnée "+sLat+" "+sLng);
+                    Log.i("pins", "Latng "+sLatLong);
+
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+
+                }
+            });
+
+        }
+        // dans le cas où le network provider ne fonctionne pas, on va utiliser le GPS
+        else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+                    //récupération de la lattitude
+                    double  latitude = location.getLatitude();
+
+
+                    //récupération de la longitude
+                    double longitude = location.getLongitude();
+
+                    //on converti en String (des fois que..)
+                    String sLng = Double.toString(longitude);
+                    String sLat = Double.toString(latitude);
+
+                    latLng = new LatLng(latitude,longitude);
+                    sLatLong = latLng.toString();
+
+
+                    RequeteAsync geolocAsyncTask = new RequeteAsync();
+                    //exécution de l'async task sans bloquer le main thread
+
+                    geolocAsyncTask.execute(apiURL,lastname, sLatLong);
+                    //new geolocAsyncTask().execute(apiURL,lastname, sLatLong);
+
+                    //Toast.makeText(MapsActivity.this, "maps is ready"+sLat+" "+sLng, Toast.LENGTH_LONG).show();
+                    Log.i("pins", "coordonnée "+sLat+" "+sLng);
+                    Log.i("pins", "Latng "+sLatLong);
+
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+
+                }
+            });
+        }
+
+
+
+
+    }
+
+    OkHttpClient client = new OkHttpClient(); // classe qui permet d'envoyer et récupérer des données
+    String apiURL = "https://pins.area42.fr/updategeoloc.php";
+
+
+
+    class RequeteAsync extends AsyncTask<String, Void, String>{
+
+        @Override
+        protected String doInBackground(String... strings) {
+            //le traitement qui va se faire en async
+
+            String url = strings[0];
+
+            //methode post
+            //on consitute le contenu du post (un endroit où on pourra mettre les elements du post)
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("lastname", strings[1])
+                    .addFormDataPart("lat", strings[2])
+                    .build();
+
+            // on envoye la requete au serveur et va construire la nouvelle url
+            Request request = new Request.Builder()
+                    .url(url) // url de base
+                    .post(requestBody) //la partie post
+                    .build();
+
+            Response response;
+            try {
+                response = client.newCall(request).execute();
+
+                // Do something with the response.
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+
+            Log.d("pins", "" + response.isSuccessful());
+
+
+            return null;
+        }
     }
 
 

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="50dp"
     tools:context="android.sio2.efficom.fr.applitoto.MainActivity"
     tools:layout_editor_absoluteY="81dp">
 
@@ -14,7 +15,7 @@
             android:id="@+id/editLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="100dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="Ramoloss"
@@ -37,7 +38,8 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="36dp"
-            android:text="Button"
+            android:text="Se connecter"
+            android:background="@color/colorAccent"
             app:layout_constraintBottom_toTopOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />

@@ -78,9 +78,9 @@ public class ReportActivity extends AppCompatActivity {
 
 
 
-     class RequeteAsyncTask extends AsyncTask<String, Void, String>{
+    public class RequeteAsyncTask extends AsyncTask<String, Void, String>{
 
-         @Override
+        @Override
         protected String doInBackground(String... strings) {
             //le traitement qui va se faire en async
 
