@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.sio2.efficom.fr.applitoto.adapters.InterventionAdapter;
 import android.sio2.efficom.fr.applitoto.model.Intervention;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -79,12 +80,28 @@ public class SecondActivity extends AppCompatActivity {
                 intent.putExtra("PHONE", item.phone);
                 intent.putExtra("MOTIVE", item.motive);
                 intent.putExtra("PENDING", item.pending);
+                intent.putExtra("DURATION", item.duration);
                 intent.putExtra("REPORT", item.report);
                 startActivity(intent);
             }
         };
-
-
+/*
+       FloatingActionButton fabMap = findViewById(R.id.fabGoToMap);
+       fabMap.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent intent = new Intent(view.getContext(), MapsActivity.class);
+               // bouton qui permet de passer vers la carte
+               //intent.putExtra("IDINTER", idInter);
+               //intent.putExtra("DATE", date);
+               //intent.putExtra("ADDRESS1", address1);
+               //intent.putExtra("ADDRESS2",address2);
+               //intent.putExtra("CITY", city);
+               //intent.putExtra("ZIPCODE", zipcode);
+               startActivity(intent);
+           }
+       });
+       */
     }
 
     @Override
@@ -162,3 +179,4 @@ public class SecondActivity extends AppCompatActivity {
         }
     }
 }
+

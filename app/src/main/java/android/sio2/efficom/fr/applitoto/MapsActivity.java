@@ -190,7 +190,7 @@ public class MapsActivity extends FragmentActivity  {
 
 
                     RequeteAsync geolocAsyncTask = new RequeteAsync();
-                   //exécution de l'async task sans bloquer le main thread
+                    //exécution de l'async task sans bloquer le main thread
 
                     geolocAsyncTask.execute(apiURL,lastname, sLatLong);
                     //new geolocAsyncTask().execute(apiURL,lastname, sLatLong);
@@ -435,7 +435,7 @@ public class MapsActivity extends FragmentActivity  {
 
                             }
 
-                           // moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
+                            // moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
 
                         } else {
                             Log.d(TAG, "getDeviceLocation : current location is null");
@@ -524,3 +524,4 @@ public class MapsActivity extends FragmentActivity  {
     }
 
 }
+

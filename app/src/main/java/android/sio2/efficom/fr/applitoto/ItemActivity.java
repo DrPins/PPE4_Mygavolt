@@ -37,11 +37,13 @@ public class ItemActivity extends AppCompatActivity {
         String firstname = getIntent().getStringExtra("FIRSTNAME");
         String company = getIntent().getStringExtra("COMPANY");
         final String date = getIntent().getStringExtra("DATE");
+        final String hour = getIntent().getStringExtra("HOUR");
         final String address1 = getIntent().getStringExtra("ADDRESS1");
         final String address2 = getIntent().getStringExtra("ADDRESS2");
         final String city = getIntent().getStringExtra("CITY");
         final String zipcode = getIntent().getStringExtra("ZIPCODE");
         String phone = getIntent().getStringExtra("PHONE");
+        final String duration = getIntent().getStringExtra("DURATION");
         String motive = getIntent().getStringExtra("MOTIVE");
         String pending = getIntent().getStringExtra("PENDING");
         final String report = getIntent().getStringExtra("REPORT");
@@ -67,6 +69,8 @@ public class ItemActivity extends AppCompatActivity {
                 // on passe en paramètre :
                 intent.putExtra("IDINTER", idInter);
                 intent.putExtra("REPORT", report);
+                intent.putExtra("DURATION", duration);
+                intent.putExtra("HOUR", hour);
                 startActivity(intent);
             }
         });
@@ -91,3 +95,4 @@ public class ItemActivity extends AppCompatActivity {
     }
 
 }
+

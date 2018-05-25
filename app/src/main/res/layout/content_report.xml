@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-android:orientation="vertical"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="android.sio2.efficom.fr.applitoto.ReportActivity"
     tools:showIn="@layout/activity_report">
@@ -23,12 +23,12 @@ android:orientation="vertical"
     <EditText
         android:id="@+id/reportEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
 
 
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="78dp"
+        android:layout_marginTop="130dp"
         android:hint="@string/report"
         android:padding="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,7 +38,27 @@ android:orientation="vertical"
         app:layout_constraintTop_toTopOf="@+id/sendReportBtn"
         app:layout_constraintVertical_bias="1.0" />
 
+    <TextView
+        android:id="@+id/timeTextView"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="98dp"
+        android:hint="Heure de fin"
+        android:paddingLeft="15dp"
+        android:textSize="18dp"/>
 
+    <Button
+        android:id="@+id/timePickerBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/reportEditText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="-130dp"
+        android:layout_marginEnd="34dp"
+        android:text="Heure de fin" />
 
 
 </RelativeLayout>
