@@ -1,5 +1,6 @@
 package android.sio2.efficom.fr.applitoto;
 
+import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -77,7 +78,7 @@ public class ReportActivity extends AppCompatActivity implements TimePickerDialo
         final EditText reportEditText  = findViewById(R.id.reportEditText);
 
         final String id = getIntent().getStringExtra("IDINTER");
-        String report = getIntent().getStringExtra("REPORT");
+        final String report = getIntent().getStringExtra("REPORT");
         String duration = getIntent().getStringExtra("DURATION");
         String timeStart = getIntent().getStringExtra("HOUR");
 
@@ -121,22 +122,32 @@ public class ReportActivity extends AppCompatActivity implements TimePickerDialo
                 String reportEdit = reportEditText.getText().toString();
                 String timeEdit = timeTextView.getText().toString();
 
+                if (!reportEdit.equals("") && !timeEdit.equals("")) {
+                    //création de l'async Task
+                    RequeteAsyncTask monAsyncTask = new RequeteAsyncTask();
+                    //exécution de l'async task sans bloquer le main thread
 
-                //création de l'async Task
-                RequeteAsyncTask monAsyncTask= new RequeteAsyncTask();
-                //exécution de l'async task sans bloquer le main thread
 
+                    // execution de l'asyncTask qui va appeler l'api de mise à jour des intervention
+                    // avec pour paramètre l'id de l'intervention, le rapport et l'heure de fin
+                    monAsyncTask.execute(apiURL, reportEdit, id, timeEdit);
 
-                // execution de l'asyncTask qui va appeler l'api de mise à jour des intervention
-                // avec pour paramètre l'id de l'intervention, le rapport et l'heure de fin
-                monAsyncTask.execute(apiURL,reportEdit,id, timeEdit);
+                    Toast.makeText(view.getContext(), "Rapport envoyé", Toast.LENGTH_LONG).show();
 
-                Toast.makeText(view.getContext(), "Rapport envoyé", Toast.LENGTH_LONG).show();
+                    //retour à l'écran affichant toutes les interventions
+                    Intent intent = new Intent(view.getContext(), SecondActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this);
+                    builder.setTitle("Attention");
+                    builder.setMessage("Vous devez remplir votre rapport et l'heure de fin pour valider cette intervention");
+                    builder.setNeutralButton("ok", null);
 
-                //retour à l'écran affichant toutes les interventions
-                Intent intent = new Intent(view.getContext(), SecondActivity.class);
-                startActivity(intent);
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
 
+                }
 
             }
         });
