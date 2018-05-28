@@ -7,15 +7,21 @@
     android:orientation="vertical"
     android:padding="50dp"
     tools:context="android.sio2.efficom.fr.applitoto.MainActivity"
-    tools:layout_editor_absoluteY="81dp">
+    tools:layout_editor_absoluteY="81dp"
+    android:background="#FFF">
 
 
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="105dp"
+            android:src="@drawable/logomygavolt" />
 
         <EditText
             android:id="@+id/editLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="80dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="Ramoloss"
