@@ -27,9 +27,7 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Splash">
-
-        </activity>
+            android:theme="@style/Splash"></activity>
         <activity
             android:name=".SecondActivity"
             android:screenOrientation="portrait" />
@@ -44,16 +42,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MapsActivity" />
-        <activity android:name=".SplashActivity"
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/Splash">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+        <activity android:name=".PreviousInterActivity"></activity>
     </application>
 
 </manifest>

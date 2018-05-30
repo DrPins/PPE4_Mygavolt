@@ -85,12 +85,12 @@ public class SecondActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-/*
-       FloatingActionButton fabMap = findViewById(R.id.fabGoToMap);
+
+       FloatingActionButton fabMap = findViewById(R.id.fabGoBack);
        fabMap.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               Intent intent = new Intent(view.getContext(), MapsActivity.class);
+               Intent intent = new Intent(view.getContext(), PreviousInterActivity.class);
                // bouton qui permet de passer vers la carte
                //intent.putExtra("IDINTER", idInter);
                //intent.putExtra("DATE", date);
@@ -101,7 +101,7 @@ public class SecondActivity extends AppCompatActivity {
                startActivity(intent);
            }
        });
-       */
+
     }
 
     @Override
