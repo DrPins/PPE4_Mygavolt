@@ -43,7 +43,7 @@ public class ReportActivity extends AppCompatActivity implements TimePickerDialo
     //une fois l'heure fixée dans le time picker, on l'insert dans le textview
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        timeTextView .setText( hourOfDay+ ":" + minute);
+        timeTextView.setText( hourOfDay+ ":" + minute);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ReportActivity extends AppCompatActivity implements TimePickerDialo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
 
-        //time picker test
+        //time picker
         // récupération des objets graphiques
         timeTextView = findViewById(R.id.timeTextView);
         timePickerBtn = findViewById(R.id.timePickerBtn);
