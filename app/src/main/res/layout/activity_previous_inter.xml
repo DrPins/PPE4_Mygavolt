@@ -18,6 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabGoBack"
         android:layout_width="wrap_content"
@@ -37,5 +38,6 @@
         app:layout_constraintTop_toTopOf="@+id/recyclerView"
         app:layout_constraintVertical_bias="0.984"
         app:srcCompat="@drawable/cast_ic_expanded_controller_skip_next" />
+        -->
 
 </android.support.constraint.ConstraintLayout>

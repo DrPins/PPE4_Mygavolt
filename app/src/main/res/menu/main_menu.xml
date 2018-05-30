@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/future"
+        android:title="@string/future"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/current"
+        android:title="@string/current"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/past"
+        android:title="@string/past"
+        app:showAsAction="never"/>
+
+
+
+</menu>

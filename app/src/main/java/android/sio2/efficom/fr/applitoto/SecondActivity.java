@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -86,7 +88,7 @@ public class SecondActivity extends AppCompatActivity {
             }
         };
 
-       FloatingActionButton fabMap = findViewById(R.id.fabGoBack);
+       /*FloatingActionButton fabMap = findViewById(R.id.fabGoBack);
        fabMap.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
@@ -100,7 +102,7 @@ public class SecondActivity extends AppCompatActivity {
                //intent.putExtra("ZIPCODE", zipcode);
                startActivity(intent);
            }
-       });
+       });*/
 
     }
 
@@ -178,5 +180,36 @@ public class SecondActivity extends AppCompatActivity {
             recyclerView.setAdapter(adapter);
         }
     }
+
+    ///////////MENU////////////
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.future){
+            //Intent intent = new Intent(SecondActivity.this, FutureInterActivity.class);
+            //startActivity(intent);
+        }
+        else if(item.getItemId() == R.id.current){
+            Intent intent = new Intent(SecondActivity.this, SecondActivity.class);
+            startActivity(intent);
+        }
+        else if(item.getItemId() == R.id.past){
+            Intent intent = new Intent(SecondActivity.this, PreviousInterActivity.class);
+            startActivity(intent);
+        }else{
+            return super.onOptionsItemSelected(item);
+        }
+        return true;
+
+    }
+
 }
 
